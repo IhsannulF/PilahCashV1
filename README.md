@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PilahCash — Platform Daur Ulang Sampah Kemasan Coffee Shop
 
-## Getting Started
+> **Tagline:** *"Membuat sampah bernilai, tanpa ribet — setor sampah, dapat uang, transparan."*  
+> **Kompetisi:** 10th IndonesiaNEXT Hackathon by Telkomsel 2026 — Tahap Final  
+> **Repository:** [github.com/IhsannulF/PilahCashV1](https://github.com/IhsannulF/PilahCashV1)
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🍃 Latar Belakang & Permasalahan
+
+Coffee shop skala kecil hingga menengah menghasilkan sampah kemasan operasional dalam volume tinggi setiap harinya — kaleng susu kental manis (SKM), botol sirup kaca, kemasan kopi UHT, dus kardus dari supplier, hingga ampas kopi. Penyaluran sampah selama ini terkendala karena:
+- Pemilik/staf coffee shop tidak tahu atau tidak sempat mencari pengepul yang rutin dan terpercaya.
+- Proses penyaluran masih manual (telepon-teleponan, negosiasi harga tanpa standar transparan).
+- Tidak ada data jejak digital mengenai nilai ekonomi dari sampah yang dihasilkan.
+
+**PilahCash** hadir sebagai platform B2B yang menghubungkan coffee shop dengan mitra pengepul daur ulang secara digital, transparan, dan terjadwal dalam waktu **< 2 menit**, tanpa memerlukan hardware/timbangan pintar mahal di fase awal.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
+- **Bahasa:** [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
+- **Styling & Theme:** [Tailwind CSS v4](https://tailwindcss.com/) dengan Design System *Kraft & Canopy* (`#16301F` Forest Dark, `#C7F13B` Lime Accent, `#F6F2E7` Kraft Base)
+- **Tipografi:** [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) (Display/Nominal), [Inter](https://fonts.google.com/specimen/Inter) (Body/UI), [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) (Data/Kode)
+- **Backend & Database:** [Supabase](https://supabase.com/) (PostgreSQL + Auth + Storage + Row Level Security)
+- **Visualisasi Data:** [Recharts](https://recharts.org/)
+- **Generator QR Code:** `qrcode.react`
+- **Form & Validasi:** React Hook Form + Zod
+
+---
+
+## ✨ Fitur Utama Berdasarkan Role
+
+### ☕ 1. Coffee Shop (`coffee_shop`)
+- **Pengajuan Setor Sampah (< 2 Menit):** Pilih kategori sampah kemasan, estimasi berat, dan metode penyaluran:
+  - **Setor Langsung (Drop Point):** Tanpa minimal berat, komisi 0%.
+  - **Dijemput Mitra (Pickup):** Minimal 2kg, potongan biaya layanan 15%.
+- **Struk Digital & Kode QR:** Setiap pengajuan menghasilkan kode transaksi unik & QR Code untuk diverifikasi petugas.
+- **Konfirmasi Dua Arah:** Coffee shop mengonfirmasi hasil timbangan petugas sebelum saldo resmi bertambah secara atomik.
+- **Dashboard Pendapatan & Dampak:** Card ringkasan total saldo, statistik total berat kg, badge gamifikasi (*Pahlawan Hijau*), dan grafik pecahan per kategori.
+- **Penarikan Saldo (Withdrawal):** Pengajuan pencairan saldo ke rekening bank (BCA, Mandiri, BRI, BNI) atau E-Wallet (GoPay, OVO, DANA).
+
+### 🚚 2. Petugas Pengepul (`pengepul`)
+- **Pencarian / Scan QR Code:** Membuka detail pengajuan setoran coffee shop lewat scan/input kode transaksi.
+- **Input Timbangan Itemized:** Menginput berat aktual per kategori sampah secara transparan.
+- **Perhitungan Otomatis:** Sistem otomatis menghitung total kotor (gross), potongan komisi dijemput, dan nominal bersih (net).
+
+### 🛡️ 3. Admin Platform (`admin`)
+- **Pengelolaan Kategori & Tarif (CRUD):** Mengatur harga patokan per kg untuk tiap kategori daur ulang.
+- **Kelola Mitra Pengepul:** Mengatur status verifikasi dan aktivitas pengepul mitra.
+- **Monitoring Platform:** Memantau seluruh arus transaksi setoran dan penarikan saldo di platform.
+
+---
+
+## 📂 Struktur Direktori Proyek
+
+```text
+PilahCash/
+├── app/
+├── admin/               # Halaman Admin (kategori, mitra, transaksi)
+├── dashboard/           # Dashboard utama Coffee Shop
+├── login/               # Halaman Autentikasi Login
+├── pengepul/            # Dashboard & Form Penimbangan Pengepul
+├── register/            # Halaman Pendaftaran Mitra
+├── riwayat/             # List Riwayat Transaksi Setoran
+├── saldo/               # Manajemen Dompet & Penarikan Saldo
+├── setor/               # Form Submission & Detail Struk QR
+├── globals.css          # Design System CSS Variables & Utility Classes
+├── layout.tsx           # Google Fonts Setup (Space Grotesk, Inter, JetBrains Mono)
+└── page.tsx             # Landing Page Utama PilahCash
+├── components/
+├── dashboard/           # BalanceCard, CategoryBreakdownChart, HistoryList
+├── forms/               # SubmissionForm, WeighingForm, WithdrawalForm
+└── shared/              # Navbar, RoleSwitcher, StatusBadge, TransactionTicketCard, QRDisplay
+├── lib/
+├── store/mock-store.ts  # In-memory Store & Demo Data
+├── supabase/            # Client, Server & Middleware SSR Helpers
+├── utils/               # Kalkulator Pricing & Generator Kode Transaksi
+└── validators/          # Schema Validasi Zod
+├── supabase/
+└── schema.sql           # Schema SQL Postgres (Tabel, RLS Policies, Seed Data)
+├── types/
+└── database.types.ts    # Tipe TypeScript Data Models
+├── design.md            # Dokumentasi Design System (Kraft & Canopy)
+├── prd.md               # Product Requirement Document (PRD)
+└── spec.md              # Technical Specification Document
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Cara Menjalankan Proyek di Lokal
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Clone Repository
+```bash
+git clone https://github.com/IhsannulF/PilahCashV1.git
+cd PilahCashV1
+```
 
-## Learn More
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Konfigurasi Variabel Lingkungan (`.env.local`)
+Buat atau perbarui file `.env.local` di root proyek:
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://<your-project-id>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-supabase-anon-key>
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Menyiapkan Database Supabase (SQL Schema)
+1. Buka dashboard [Supabase](https://supabase.com) Anda -> masuk ke **SQL Editor**.
+2. Salin seluruh isi file [`supabase/schema.sql`](supabase/schema.sql).
+3. Paste dan klik **Run** untuk membuat tabel, fungsi RLS, dan seed data awal.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 5. Jalankan Development Server
+```bash
+npm run dev
+```
+Buka browser di [http://localhost:3000](http://localhost:3000).
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 Lisensi & Kredit
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proyek ini dibangun khusus untuk tahap final **10th IndonesiaNEXT Hackathon by Telkomsel 2026** oleh Tim PilahCash.
