@@ -1,26 +1,200 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-space: var(--font-space-grotesk), sans-serif;
+    --font-sans: var(--font-inter), sans-serif;
+    --font-mono: var(--font-jetbrains-mono), monospace;
+
+    --forest-900: #16301F;
+    --forest-700: #20402E;
+    --lime-400: #C7F13B;
+    --lime-100: #EAFAC4;
+    --kraft-50: #F6F2E7;
+    --kraft-card: #FFFDF7;
+    --ink-900: #12210C;
+    --ink-muted: #3D4C3A;
+    --clay-500: #E0733A;
+    --paper-200: #EDE7D8;
+    --error-red: #C4402A;
   }
 }
 
+/* Custom Utilities for Fonts */
+.font-display {
+  font-family: var(--font-space);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Base Body Style */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #F6F2E7;
+  color: #12210C;
+  font-family: var(--font-sans);
+}
+
+/* Custom Color Utility Classes */
+.bg-kraft-50 {
+  background-color: #F6F2E7;
+}
+
+.bg-kraft-card {
+  background-color: #FFFDF7;
+}
+
+.bg-forest-900 {
+  background-color: #16301F;
+}
+
+.bg-forest-700 {
+  background-color: #20402E;
+}
+
+.bg-lime-400 {
+  background-color: #C7F13B;
+}
+
+.bg-lime-100 {
+  background-color: #EAFAC4;
+}
+
+.bg-clay-500 {
+  background-color: #E0733A;
+}
+
+.bg-paper-200 {
+  background-color: #EDE7D8;
+}
+
+.text-forest-900 {
+  color: #16301F;
+}
+
+.text-forest-700 {
+  color: #20402E;
+}
+
+.text-lime-400 {
+  color: #C7F13B;
+}
+
+.text-lime-100 {
+  color: #EAFAC4;
+}
+
+.text-kraft-50 {
+  color: #F6F2E7;
+}
+
+.text-ink-900 {
+  color: #12210C;
+}
+
+.text-ink-muted {
+  color: #3D4C3A;
+}
+
+.text-clay-500 {
+  color: #E0733A;
+}
+
+.border-paper-200 {
+  border-color: #EDE7D8;
+}
+
+/* Cards according to design.md */
+.card-kraft {
+  background-color: #FFFDF7;
+  border: 1px solid #EDE7D8;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(18, 33, 12, 0.05);
+}
+
+.card-forest {
+  background-color: #16301F;
+  color: #F6F2E7;
+  border-radius: 16px;
+}
+
+/* Ticket Receipt Card Signature Element */
+.ticket-receipt-card {
+  background-color: #FFFDF7;
+  border: 1px solid #EDE7D8;
+  border-radius: 16px;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.ticket-receipt-card:hover {
+  border-color: #16301F;
+  box-shadow: 0 4px 16px rgba(22, 48, 31, 0.08);
+}
+
+/* Buttons according to design.md */
+.btn-lime {
+  background-color: #C7F13B;
+  color: #12210C;
+  font-weight: 700;
+  border-radius: 999px;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-lime:hover {
+  background-color: #B5DE2E;
+  transform: translateY(-1px);
+}
+
+.btn-lime:active {
+  transform: scale(0.98);
+}
+
+.btn-forest-outline {
+  border: 1px solid #C7F13B;
+  color: #C7F13B;
+  background-color: transparent;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-forest-outline:hover {
+  background-color: rgba(199, 241, 59, 0.15);
+}
+
+/* Status Badges according to design.md Section 5 */
+.badge-pending {
+  background-color: #EDE7D8;
+  color: #12210C;
+  border: 1px solid rgba(18, 33, 12, 0.15);
+  font-weight: 700;
+}
+
+.badge-matched,
+.badge-weighed {
+  background-color: rgba(224, 115, 58, 0.15);
+  color: #E0733A;
+  border: 1px solid rgba(224, 115, 58, 0.35);
+  font-weight: 700;
+}
+
+.badge-completed {
+  background-color: rgba(199, 241, 59, 0.3);
+  color: #16301F;
+  border: 1px solid rgba(22, 48, 31, 0.25);
+  font-weight: 700;
+}
+
+.badge-cancelled,
+.badge-disputed {
+  background-color: rgba(196, 64, 42, 0.15);
+  color: #C4402A;
+  border: 1px solid rgba(196, 64, 42, 0.35);
+  font-weight: 700;
 }
