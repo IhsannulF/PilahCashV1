@@ -2,10 +2,8 @@
 
 import { useState, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { Navbar } from '@/components/shared/navbar';
 import { WeighingForm } from '@/components/forms/weighing-form';
 import { mockStore } from '@/lib/store/mock-store';
-import { UserRole } from '@/types/database.types';
 import { ArrowLeft, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
 
@@ -16,16 +14,13 @@ export default function PengepulWeighingPage({
 }) {
   const resolvedParams = use(params);
   const router = useRouter();
-  const [role, setRole] = useState<UserRole>('pengepul');
 
   const tx = mockStore.getTransactionById(resolvedParams.transactionId);
   const categories = mockStore.getCategories();
-  const { wallet } = mockStore.getWallet();
 
   if (!tx) {
     return (
       <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-        <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
         <div className="flex-1 flex flex-col items-center justify-center p-4 text-center space-y-4">
           <p className="text-lg font-display font-bold text-forest-900">Transaksi tidak ditemukan</p>
           <Link href="/pengepul/dashboard" className="text-xs font-bold text-forest-900 underline">
@@ -43,7 +38,6 @@ export default function PengepulWeighingPage({
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-8 space-y-6">
         <Link

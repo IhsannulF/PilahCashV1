@@ -1,16 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Navbar } from '@/components/shared/navbar';
 import { WithdrawalForm } from '@/components/forms/withdrawal-form';
 import { mockStore } from '@/lib/store/mock-store';
-import { UserRole } from '@/types/database.types';
 import { formatRupiah } from '@/lib/utils/pricing';
 import { Wallet, ArrowDownRight, ArrowUpRight, Clock, History } from 'lucide-react';
 import { WithdrawalInput } from '@/lib/validators';
 
 export default function SaldoPage() {
-  const [role, setRole] = useState<UserRole>('coffee_shop');
   const [, setTick] = useState(0);
 
   const { wallet, mutations } = mockStore.getWallet();
@@ -23,7 +20,6 @@ export default function SaldoPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         <div>
@@ -126,7 +122,7 @@ export default function SaldoPage() {
                     <span className="font-bold text-forest-900 block">
                       {m.type === 'credit' ? 'Setoran Sampah Selesai' : 'Penarikan Saldo'}
                     </span>
-                    <span className="text-gray-500 font-sans text-[11px]">
+                    <span className="text-gray-500 font-sans text-[11px]" suppressHydrationWarning>
                       {new Date(m.created_at).toLocaleDateString('id-ID', {
                         day: 'numeric',
                         month: 'short',

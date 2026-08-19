@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Leaf, Store, Truck, ShieldCheck, ArrowRight, Lock, Mail } from 'lucide-react';
 import { toast } from 'sonner';
@@ -10,16 +11,14 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('coffeeshop@pilahcash.id');
   const [password, setPassword] = useState('password123');
-  const [role, setRole] = useState<'coffee_shop' | 'pengepul' | 'admin'>('coffee_shop');
+  const [role, setRole] = useState<'coffee_shop' | 'admin'>('coffee_shop');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success(`Login berhasil sebagai ${role === 'coffee_shop' ? 'Coffee Shop' : role === 'pengepul' ? 'Pengepul' : 'Admin'}!`);
+    toast.success(`Login berhasil sebagai ${role === 'coffee_shop' ? 'Coffee Shop' : 'Admin'}!`);
 
     if (role === 'coffee_shop') {
       router.push('/dashboard');
-    } else if (role === 'pengepul') {
-      router.push('/pengepul/dashboard');
     } else {
       router.push('/admin/transaksi');
     }
@@ -32,8 +31,8 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-xl eco-gradient-bg flex items-center justify-center text-white shadow-md">
-              <Leaf className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-md overflow-hidden p-1">
+              <Image src="/logo.png" alt="PilahCash" width={48} height={48} className="w-full h-full object-contain" />
             </div>
             <span className="font-black text-2xl text-emerald-950 dark:text-emerald-50">
               Pilah<span className="text-emerald-600">Cash</span>
@@ -43,12 +42,12 @@ export default function LoginPage() {
             Selamat Datang Kembali
           </h1>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            Masuk ke akun usaha coffee shop atau pengepul mitra Anda
+            Masuk ke akun Anda untuk mulai mengelola sampah kemasan
           </p>
         </div>
 
         {/* Role Selector */}
-        <div className="grid grid-cols-3 gap-2 p-1 bg-gray-100 dark:bg-slate-800 rounded-xl text-xs font-bold">
+        <div className="grid grid-cols-2 gap-2 p-1 bg-gray-100 dark:bg-slate-800 rounded-xl text-xs font-bold">
           <button
             type="button"
             onClick={() => setRole('coffee_shop')}
@@ -59,19 +58,7 @@ export default function LoginPage() {
             }`}
           >
             <Store className="w-3.5 h-3.5" />
-            <span>Coffee Shop</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setRole('pengepul')}
-            className={`py-2 px-2 rounded-lg flex items-center justify-center gap-1.5 transition-all ${
-              role === 'pengepul'
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400'
-            }`}
-          >
-            <Truck className="w-3.5 h-3.5" />
-            <span>Pengepul</span>
+            <span>Coffee Shop (User)</span>
           </button>
           <button
             type="button"
@@ -83,7 +70,7 @@ export default function LoginPage() {
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Admin</span>
+            <span>Admin (PilahCash)</span>
           </button>
         </div>
 

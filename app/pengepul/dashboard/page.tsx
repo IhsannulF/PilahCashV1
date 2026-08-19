@@ -3,21 +3,17 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Navbar } from '@/components/shared/navbar';
 import { StatusBadge } from '@/components/shared/status-badge';
 import { mockStore } from '@/lib/store/mock-store';
-import { UserRole } from '@/types/database.types';
 import { QrCode, Search, Scale, Truck } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function PengepulDashboard() {
   const router = useRouter();
-  const [role, setRole] = useState<UserRole>('pengepul');
   const [searchCode, setSearchCode] = useState('');
   const [, setTick] = useState(0);
 
-  const transactions = mockStore.getTransactions('pengepul');
-  const { wallet } = mockStore.getWallet();
+  const transactions = mockStore.getTransactions('admin');
 
   const handleSearchOrScan = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +39,6 @@ export default function PengepulDashboard() {
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Header */}

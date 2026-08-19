@@ -1,21 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { Navbar } from '@/components/shared/navbar';
 import { HistoryList } from '@/components/dashboard/history-list';
 import { QRDisplay } from '@/components/shared/qr-display';
 import { mockStore } from '@/lib/store/mock-store';
-import { Transaction, UserRole } from '@/types/database.types';
+import { Transaction } from '@/types/database.types';
 import { X, History } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function RiwayatPage() {
-  const [role, setRole] = useState<UserRole>('coffee_shop');
   const [activeQRTransaction, setActiveQRTransaction] = useState<Transaction | null>(null);
   const [, setTick] = useState(0);
 
   const transactions = mockStore.getTransactions('coffee_shop');
-  const { wallet } = mockStore.getWallet();
 
   const handleConfirm = (transactionId: string) => {
     try {
@@ -29,7 +26,6 @@ export default function RiwayatPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         <div className="flex items-center justify-between">

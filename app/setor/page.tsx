@@ -1,19 +1,14 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Navbar } from '@/components/shared/navbar';
 import { SubmissionForm } from '@/components/forms/submission-form';
 import { mockStore } from '@/lib/store/mock-store';
-import { UserRole } from '@/types/database.types';
 import { ArrowLeft, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 export default function SetorPage() {
   const router = useRouter();
-  const [role, setRole] = useState<UserRole>('coffee_shop');
   const categories = mockStore.getCategories();
-  const { wallet } = mockStore.getWallet();
 
   const handleSubmissionSuccess = (data: {
     method: 'setor_langsung' | 'dijemput';
@@ -27,7 +22,6 @@ export default function SetorPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-8 space-y-6">
         

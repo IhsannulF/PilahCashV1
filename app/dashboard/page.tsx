@@ -1,19 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { Navbar } from '@/components/shared/navbar';
 import { BalanceCard } from '@/components/dashboard/balance-card';
 import { CategoryBreakdownChart } from '@/components/dashboard/category-breakdown-chart';
 import { HistoryList } from '@/components/dashboard/history-list';
 import { QRDisplay } from '@/components/shared/qr-display';
 import { mockStore } from '@/lib/store/mock-store';
-import { Transaction, UserRole, TransactionItem } from '@/types/database.types';
+import { Transaction, TransactionItem } from '@/types/database.types';
 import { PlusCircle, Sparkles, X, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
 export default function CoffeeShopDashboard() {
-  const [role, setRole] = useState<UserRole>('coffee_shop');
   const [activeQRTransaction, setActiveQRTransaction] = useState<Transaction | null>(null);
 
   const [, setTick] = useState(0);
@@ -42,7 +40,6 @@ export default function CoffeeShopDashboard() {
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         

@@ -6,7 +6,7 @@ import { useRouter, usePathname } from 'next/navigation';
 
 interface RoleSwitcherProps {
   currentRole: UserRole;
-  onRoleChange: (role: UserRole) => void;
+  onRoleChange?: (role: UserRole) => void;
 }
 
 export function RoleSwitcher({ currentRole, onRoleChange }: RoleSwitcherProps) {
@@ -14,11 +14,11 @@ export function RoleSwitcher({ currentRole, onRoleChange }: RoleSwitcherProps) {
   const pathname = usePathname();
 
   const handleSelect = (role: UserRole) => {
-    onRoleChange(role);
+    if (onRoleChange) {
+      onRoleChange(role);
+    }
     if (role === 'coffee_shop' && !pathname.startsWith('/dashboard')) {
       router.push('/dashboard');
-    } else if (role === 'pengepul' && !pathname.startsWith('/pengepul')) {
-      router.push('/pengepul/dashboard');
     } else if (role === 'admin' && !pathname.startsWith('/admin')) {
       router.push('/admin/transaksi');
     }
@@ -42,18 +42,6 @@ export function RoleSwitcher({ currentRole, onRoleChange }: RoleSwitcherProps) {
       </button>
 
       <button
-        onClick={() => handleSelect('pengepul')}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-200 text-xs ${
-          currentRole === 'pengepul'
-            ? 'bg-lime-400 text-ink-900 font-bold shadow'
-            : 'text-kraft-50/70 hover:text-lime-400'
-        }`}
-      >
-        <Truck className="w-3.5 h-3.5" />
-        <span>Pengepul</span>
-      </button>
-
-      <button
         onClick={() => handleSelect('admin')}
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-200 text-xs ${
           currentRole === 'admin'
@@ -62,7 +50,7 @@ export function RoleSwitcher({ currentRole, onRoleChange }: RoleSwitcherProps) {
         }`}
       >
         <ShieldCheck className="w-3.5 h-3.5" />
-        <span>Admin</span>
+        <span>Admin (PilahCash)</span>
       </button>
     </div>
   );

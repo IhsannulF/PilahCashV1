@@ -1,4 +1,4 @@
-export type UserRole = 'coffee_shop' | 'pengepul' | 'admin';
+export type UserRole = 'coffee_shop' | 'admin';
 
 export type DepositMethod = 'setor_langsung' | 'dijemput';
 

@@ -19,7 +19,7 @@ export const INITIAL_CATEGORIES: WasteCategory[] = [
     price_per_kg: 4500,
     icon: 'Recycle',
     is_active: true,
-    updated_at: new Date().toISOString(),
+    updated_at: '2026-08-01T00:00:00.000Z',
   },
   {
     id: 'cat-2',
@@ -27,7 +27,7 @@ export const INITIAL_CATEGORIES: WasteCategory[] = [
     price_per_kg: 2500,
     icon: 'Box',
     is_active: true,
-    updated_at: new Date().toISOString(),
+    updated_at: '2026-08-01T00:00:00.000Z',
   },
   {
     id: 'cat-3',
@@ -35,7 +35,7 @@ export const INITIAL_CATEGORIES: WasteCategory[] = [
     price_per_kg: 7500,
     icon: 'Disc',
     is_active: true,
-    updated_at: new Date().toISOString(),
+    updated_at: '2026-08-01T00:00:00.000Z',
   },
   {
     id: 'cat-4',
@@ -43,7 +43,7 @@ export const INITIAL_CATEGORIES: WasteCategory[] = [
     price_per_kg: 1500,
     icon: 'Glass',
     is_active: true,
-    updated_at: new Date().toISOString(),
+    updated_at: '2026-08-01T00:00:00.000Z',
   },
   {
     id: 'cat-5',
@@ -51,7 +51,7 @@ export const INITIAL_CATEGORIES: WasteCategory[] = [
     price_per_kg: 1000,
     icon: 'Leaf',
     is_active: true,
-    updated_at: new Date().toISOString(),
+    updated_at: '2026-08-01T00:00:00.000Z',
   },
   {
     id: 'cat-6',
@@ -59,7 +59,7 @@ export const INITIAL_CATEGORIES: WasteCategory[] = [
     price_per_kg: 500,
     icon: 'Trash2',
     is_active: true,
-    updated_at: new Date().toISOString(),
+    updated_at: '2026-08-01T00:00:00.000Z',
   },
 ];
 
@@ -70,15 +70,15 @@ export const INITIAL_PROFILES: Profile[] = [
     business_name: 'Kopi Senja Senopati',
     phone: '081298765432',
     address: 'Jl. Senopati No. 45, Kebayoran Baru, Jakarta Selatan',
-    created_at: new Date(Date.now() - 30 * 86400000).toISOString(),
+    created_at: '2026-07-15T08:00:00.000Z',
   },
   {
     id: 'pg-demo',
-    role: 'pengepul',
+    role: 'admin',
     business_name: 'Mitra Daur Ulang Berkah (Pak Joko)',
     phone: '085711223344',
     address: 'Jl. Radio Dalam No. 12, Jakarta Selatan',
-    created_at: new Date(Date.now() - 60 * 86400000).toISOString(),
+    created_at: '2026-06-15T08:00:00.000Z',
   },
   {
     id: 'adm-demo',
@@ -86,7 +86,7 @@ export const INITIAL_PROFILES: Profile[] = [
     business_name: 'Admin Operational PilahCash',
     phone: '081100998877',
     address: 'HQ Telkomsel Tower, Jakarta',
-    created_at: new Date(Date.now() - 90 * 86400000).toISOString(),
+    created_at: '2026-05-15T08:00:00.000Z',
   },
 ];
 
@@ -120,7 +120,7 @@ export const INITIAL_USER_BADGES: UserBadge[] = [
     coffee_shop_id: 'cs-demo',
     badge_id: 'bg-1',
     period: '2026-08',
-    earned_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+    earned_at: '2026-08-10T12:00:00.000Z',
     badge: INITIAL_BADGES[0],
   },
   {
@@ -128,7 +128,7 @@ export const INITIAL_USER_BADGES: UserBadge[] = [
     coffee_shop_id: 'cs-demo',
     badge_id: 'bg-2',
     period: '2026-08',
-    earned_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    earned_at: '2026-08-14T12:00:00.000Z',
     badge: INITIAL_BADGES[1],
   },
 ];
@@ -146,11 +146,11 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     gross_amount: 72500,
     commission_amount: 10875,
     net_amount: 61625,
-    scheduled_at: new Date(Date.now() - 2 * 86400000).toISOString(),
-    weighed_at: new Date(Date.now() - 2 * 86400000 + 3600000).toISOString(),
-    confirmed_at: new Date(Date.now() - 2 * 86400000 + 7200000).toISOString(),
+    scheduled_at: '2026-08-16T08:00:00.000Z',
+    weighed_at: '2026-08-16T09:00:00.000Z',
+    confirmed_at: '2026-08-16T10:00:00.000Z',
     cancelled_reason: null,
-    created_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+    created_at: '2026-08-15T15:00:00.000Z',
     coffee_shop: INITIAL_PROFILES[0],
     pengepul: INITIAL_PROFILES[1],
     items: [
@@ -185,10 +185,10 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     commission_amount: 0,
     net_amount: 27000,
     scheduled_at: null,
-    weighed_at: new Date(Date.now() - 3600000).toISOString(),
+    weighed_at: '2026-08-18T08:30:00.000Z',
     confirmed_at: null,
     cancelled_reason: null,
-    created_at: new Date(Date.now() - 7200000).toISOString(),
+    created_at: '2026-08-18T07:30:00.000Z',
     coffee_shop: INITIAL_PROFILES[0],
     pengepul: INITIAL_PROFILES[1],
     items: [
@@ -214,11 +214,11 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
     gross_amount: null,
     commission_amount: null,
     net_amount: null,
-    scheduled_at: new Date(Date.now() + 86400000).toISOString(),
+    scheduled_at: '2026-08-20T10:00:00.000Z',
     weighed_at: null,
     confirmed_at: null,
     cancelled_reason: null,
-    created_at: new Date(Date.now() - 1800000).toISOString(),
+    created_at: '2026-08-19T08:00:00.000Z',
     coffee_shop: INITIAL_PROFILES[0],
     items: [],
   },
@@ -227,7 +227,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
 export const INITIAL_WALLET: Wallet = {
   coffee_shop_id: 'cs-demo',
   balance: 146625, // includes baseline balance + previous deposits
-  updated_at: new Date().toISOString(),
+  updated_at: '2026-08-19T08:00:00.000Z',
 };
 
 export const INITIAL_WALLET_MUTATIONS: WalletTransaction[] = [
@@ -238,7 +238,7 @@ export const INITIAL_WALLET_MUTATIONS: WalletTransaction[] = [
     type: 'credit',
     amount: 61625,
     status: 'success',
-    created_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    created_at: '2026-08-16T10:00:00.000Z',
     transaction: INITIAL_TRANSACTIONS[0],
   },
   {
@@ -248,7 +248,7 @@ export const INITIAL_WALLET_MUTATIONS: WalletTransaction[] = [
     type: 'credit',
     amount: 85000,
     status: 'success',
-    created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+    created_at: '2026-08-08T12:00:00.000Z',
   },
 ];
 
@@ -313,11 +313,6 @@ class PilahCashStore {
   public getTransactions(role?: UserRole): Transaction[] {
     if (role === 'coffee_shop') {
       return this.transactions.filter((t) => t.coffee_shop_id === 'cs-demo');
-    }
-    if (role === 'pengepul') {
-      return this.transactions.filter(
-        (t) => t.pengepul_id === 'pg-demo' || (t.status === 'pending' && t.method === 'dijemput')
-      );
     }
     return this.transactions;
   }

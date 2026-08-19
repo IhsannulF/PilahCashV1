@@ -1,15 +1,17 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Leaf, Wallet, PlusCircle, History, ArrowUpRight, ShieldCheck, Truck, LogOut } from 'lucide-react';
 import { UserRole } from '@/types/database.types';
-import { RoleSwitcher } from './role-switcher';
 import { formatRupiah } from '@/lib/utils/pricing';
 
+import { mockStore } from '@/lib/store/mock-store';
+
 interface NavbarProps {
-  currentRole: UserRole;
-  onRoleChange: (role: UserRole) => void;
+  currentRole?: UserRole;
+  onRoleChange?: (role: UserRole) => void;
   balance?: number;
 }
 
@@ -20,32 +22,36 @@ interface NavLinkItem {
   highlight?: boolean;
 }
 
-export function Navbar({ currentRole, onRoleChange, balance = 0 }: NavbarProps) {
+export function Navbar({ currentRole, onRoleChange, balance }: NavbarProps) {
   const pathname = usePathname();
+
+  // Hide navbar on auth pages
+  if (pathname === '/login' || pathname === '/register') {
+    return null;
+  }
+
+  // Infer role from route if not explicitly provided
+  const inferredRole: UserRole = pathname.startsWith('/admin') ? 'admin' : 'coffee_shop';
+
+  const activeRole = currentRole || inferredRole;
+
+  // Infer balance from mockStore if not explicitly provided
+  const activeBalance = balance !== undefined ? balance : mockStore.getWallet().wallet.balance;
 
   const coffeeShopLinks: NavLinkItem[] = [
     { href: '/dashboard', label: 'Dashboard', icon: Leaf },
-    { href: '/setor', label: '+ Setor Sampah', icon: PlusCircle, highlight: true },
     { href: '/riwayat', label: 'Riwayat Sampah', icon: History },
     { href: '/saldo', label: 'Saldo & Penarikan', icon: Wallet },
-  ];
-
-  const pengepulLinks: NavLinkItem[] = [
-    { href: '/pengepul/dashboard', label: 'Daftar Penjemputan / Scan', icon: Truck },
+    { href: '/setor', label: '+ Setor Sampah', icon: PlusCircle, highlight: true },
   ];
 
   const adminLinks: NavLinkItem[] = [
+    { href: '/admin/transaksi', label: 'Operasional & Verification', icon: ShieldCheck },
     { href: '/admin/kategori', label: 'Kategori & Tarif', icon: Leaf },
-    { href: '/admin/mitra', label: 'Kelola Pengepul', icon: Truck },
-    { href: '/admin/transaksi', label: 'Monitoring Transaksi', icon: ShieldCheck },
+    { href: '/admin/mitra', label: 'Mitra Daur Ulang', icon: Truck },
   ];
 
-  const activeLinks =
-    currentRole === 'coffee_shop'
-      ? coffeeShopLinks
-      : currentRole === 'pengepul'
-      ? pengepulLinks
-      : adminLinks;
+  const activeLinks = activeRole === 'admin' ? adminLinks : coffeeShopLinks;
 
   return (
     <header className="sticky top-0 z-40 w-full bg-forest-900 text-kraft-50 border-b border-forest-700 shadow-md">
@@ -55,8 +61,8 @@ export function Navbar({ currentRole, onRoleChange, balance = 0 }: NavbarProps) 
           {/* Brand Logo */}
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-full bg-lime-400 text-ink-900 flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-                <Leaf className="w-5 h-5 fill-ink-900" />
+              <div className="w-10 h-10 rounded-full bg-white text-ink-900 flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform overflow-hidden p-0.5">
+                <Image src="/logo.png" alt="PilahCash Logo" width={40} height={40} className="w-full h-full object-contain rounded-full" />
               </div>
               <div className="flex flex-col">
                 <span className="font-display font-extrabold text-xl text-kraft-50 tracking-tight flex items-center gap-1">
@@ -94,11 +100,9 @@ export function Navbar({ currentRole, onRoleChange, balance = 0 }: NavbarProps) 
             </nav>
           </div>
 
-          {/* Right Section: Role Switcher & Balance Badge */}
+          {/* Right Section: Saldo / Admin Badge & Logout */}
           <div className="flex items-center gap-3">
-            <RoleSwitcher currentRole={currentRole} onRoleChange={onRoleChange} />
-
-            {currentRole === 'coffee_shop' && (
+            {activeRole === 'coffee_shop' && (
               <Link
                 href="/saldo"
                 className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 bg-forest-700 border border-lime-400/30 rounded-full hover:border-lime-400 transition-colors"
@@ -107,11 +111,18 @@ export function Navbar({ currentRole, onRoleChange, balance = 0 }: NavbarProps) 
                 <div className="flex flex-col text-left leading-none">
                   <span className="text-[9px] text-kraft-50/60 uppercase tracking-wider font-bold">Saldo</span>
                   <span className="text-xs font-display font-extrabold text-lime-400">
-                    {formatRupiah(balance)}
+                    {formatRupiah(activeBalance)}
                   </span>
                 </div>
                 <ArrowUpRight className="w-3.5 h-3.5 text-lime-400" />
               </Link>
+            )}
+
+            {activeRole === 'admin' && (
+              <div className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 bg-forest-700 border border-lime-400/30 rounded-full text-xs font-bold text-lime-400">
+                <ShieldCheck className="w-4 h-4 text-lime-400" />
+                <span>Admin PilahCash</span>
+              </div>
             )}
 
             <Link

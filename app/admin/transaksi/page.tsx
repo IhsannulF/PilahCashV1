@@ -1,31 +1,47 @@
 'use client';
 
 import { useState } from 'react';
-import { Navbar } from '@/components/shared/navbar';
 import { StatusBadge } from '@/components/shared/status-badge';
 import { mockStore } from '@/lib/store/mock-store';
-import { UserRole } from '@/types/database.types';
 import { formatRupiah } from '@/lib/utils/pricing';
-import { ShieldCheck, Eye } from 'lucide-react';
+import { ShieldCheck, Eye, CheckCircle2, Truck } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 export default function AdminTransaksiPage() {
-  const [role, setRole] = useState<UserRole>('admin');
+  const [, setTick] = useState(0);
   const transactions = mockStore.getTransactions('admin');
-  const { wallet } = mockStore.getWallet();
+
+  const handleVerifyPickup = (id: string) => {
+    try {
+      mockStore.assignPengepul(id);
+      toast.success('Penjemputan diverifikasi oleh Tim Operasional PilahCash!');
+      setTick((t) => t + 1);
+    } catch (err: any) {
+      toast.error(err.message || 'Gagal memproses penjemputan');
+    }
+  };
+
+  const handleConfirmTransaction = (id: string) => {
+    try {
+      mockStore.confirmTransaction(id);
+      toast.success('Setoran berhasil diverifikasi! Saldo disalurkan ke Coffee Shop.');
+      setTick((t) => t + 1);
+    } catch (err: any) {
+      toast.error(err.message || 'Gagal menyelesaikan transaksi');
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
-
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         <div>
           <h1 className="text-2xl font-display font-extrabold text-forest-900 flex items-center gap-2">
             <ShieldCheck className="w-6 h-6 text-forest-900" />
-            Monitoring Transaksi Platform (Admin)
+            Operasional & Monitoring Setoran (PilahCash Admin)
           </h1>
           <p className="text-xs text-gray-600 font-sans mt-1">
-            Pantau seluruh arus transaksi setoran sampah kemasan antar coffee shop dan pengepul
+            Kelola penjemputan, verifikasi timbangan sampah kemasan coffee shop, dan pantau penyaluran ke pengepul rekanan
           </p>
         </div>
 
@@ -53,23 +69,45 @@ export default function AdminTransaksiPage() {
                     Coffee Shop: {tx.coffee_shop?.business_name}
                   </p>
                   <p className="text-xs text-gray-500 font-sans">
-                    Mitra: {tx.pengepul?.business_name || 'Belum di-assign'} • Metode: {tx.method}
+                    Metode Setor: <span className="font-semibold uppercase">{tx.method.replace('_', ' ')}</span> • Perkiraan Berat: {tx.estimated_weight_kg ? `${tx.estimated_weight_kg} kg` : '-'}
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between md:justify-end gap-4">
-                  <div className="text-left md:text-right">
+                <div className="flex items-center justify-between md:justify-end gap-3">
+                  <div className="text-left md:text-right mr-2">
                     <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">
-                      Nominal Bersih
+                      Nominal Setoran
                     </span>
                     <span className="font-display font-extrabold text-sm text-forest-900">
-                      {tx.net_amount !== null ? formatRupiah(tx.net_amount) : 'Pending'}
+                      {tx.net_amount !== null ? formatRupiah(tx.net_amount) : 'Menunggu Timbangan'}
                     </span>
                   </div>
 
+                  {tx.status === 'pending' && (
+                    <button
+                      onClick={() => handleVerifyPickup(tx.id)}
+                      className="px-3 py-1.5 bg-forest-900 text-lime-400 rounded-xl text-xs font-bold flex items-center gap-1 hover:bg-forest-800 transition-colors"
+                      title="Proses Penjemputan / Terima Setoran"
+                    >
+                      <Truck className="w-3.5 h-3.5" />
+                      <span>Proses Setoran</span>
+                    </button>
+                  )}
+
+                  {tx.status === 'weighed' && (
+                    <button
+                      onClick={() => handleConfirmTransaction(tx.id)}
+                      className="px-3 py-1.5 btn-lime text-ink-900 rounded-xl text-xs font-bold flex items-center gap-1"
+                      title="Verifikasi Hasil Timbangan"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Konfirmasi</span>
+                    </button>
+                  )}
+
                   <Link
                     href={`/setor/${tx.id}`}
-                    className="p-2.5 bg-kraft-card border border-paper-200 hover:border-forest-900 text-forest-900 rounded-xl transition-colors"
+                    className="p-2 bg-kraft-card border border-paper-200 hover:border-forest-900 text-forest-900 rounded-xl transition-colors"
                   >
                     <Eye className="w-4 h-4" />
                   </Link>

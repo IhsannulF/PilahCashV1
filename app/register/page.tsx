@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Leaf, Store, Truck, ArrowRight, Lock, Mail, Building, Phone, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
@@ -28,48 +29,19 @@ export default function RegisterPage() {
         {/* Header */}
         <div className="text-center space-y-2">
           <Link href="/" className="inline-flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-xl eco-gradient-bg flex items-center justify-center text-white shadow-md">
-              <Leaf className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-md overflow-hidden p-1">
+              <Image src="/logo.png" alt="PilahCash" width={48} height={48} className="w-full h-full object-contain" />
             </div>
             <span className="font-black text-2xl text-emerald-950 dark:text-emerald-50">
               Pilah<span className="text-emerald-600">Cash</span>
             </span>
           </Link>
           <h1 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 pt-2">
-            Registrasi Mitra PilahCash
+            Registrasi Akun Coffee Shop
           </h1>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            Daftarkan bisnis coffee shop Anda atau bergabung sebagai mitra pengepul daur ulang
+            Daftarkan bisnis coffee shop Anda untuk mulai menyalurkan sampah kemasan
           </p>
-        </div>
-
-        {/* Role Toggle */}
-        <div className="grid grid-cols-2 gap-2 p-1 bg-gray-100 dark:bg-slate-800 rounded-xl text-xs font-bold">
-          <button
-            type="button"
-            onClick={() => setRole('coffee_shop')}
-            className={`py-2.5 px-3 rounded-lg flex items-center justify-center gap-2 transition-all ${
-              role === 'coffee_shop'
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400'
-            }`}
-          >
-            <Store className="w-4 h-4" />
-            <span>Coffee Shop / Penyetor</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setRole('pengepul')}
-            className={`py-2.5 px-3 rounded-lg flex items-center justify-center gap-2 transition-all ${
-              role === 'pengepul'
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'text-gray-600 dark:text-gray-400'
-            }`}
-          >
-            <Truck className="w-4 h-4" />
-            <span>Mitra Pengepul</span>
-          </button>
         </div>
 
         <form onSubmit={handleRegister} className="space-y-3.5">

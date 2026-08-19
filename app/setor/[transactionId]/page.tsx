@@ -1,11 +1,9 @@
 'use client';
 
 import { useState, use } from 'react';
-import { Navbar } from '@/components/shared/navbar';
 import { QRDisplay } from '@/components/shared/qr-display';
 import { StatusBadge } from '@/components/shared/status-badge';
 import { mockStore } from '@/lib/store/mock-store';
-import { UserRole } from '@/types/database.types';
 import { formatRupiah } from '@/lib/utils/pricing';
 import { ArrowLeft, CheckCircle2, Clock, Truck, Store, Calendar } from 'lucide-react';
 import Link from 'next/link';
@@ -17,16 +15,13 @@ export default function TransactionDetailPage({
   params: Promise<{ transactionId: string }>;
 }) {
   const resolvedParams = use(params);
-  const [role, setRole] = useState<UserRole>('coffee_shop');
   const [, setTick] = useState(0);
 
   const tx = mockStore.getTransactionById(resolvedParams.transactionId);
-  const { wallet } = mockStore.getWallet();
 
   if (!tx) {
     return (
       <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-        <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
         <div className="flex-1 flex flex-col items-center justify-center p-4 text-center space-y-4">
           <p className="text-lg font-bold text-forest-900 font-display">Transaksi tidak ditemukan</p>
           <Link href="/dashboard" className="text-xs font-bold text-forest-900 underline">
@@ -49,7 +44,6 @@ export default function TransactionDetailPage({
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 py-8 space-y-6">
         <Link

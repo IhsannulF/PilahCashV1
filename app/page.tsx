@@ -1,21 +1,15 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
-import { Navbar } from '@/components/shared/navbar';
 import { mockStore } from '@/lib/store/mock-store';
-import { UserRole } from '@/types/database.types';
 import { formatRupiah } from '@/lib/utils/pricing';
 import { Leaf, Store, Truck, ShieldCheck, ArrowRight, CheckCircle2, Ticket, Sparkles } from 'lucide-react';
 
 export default function Home() {
-  const [role, setRole] = useState<UserRole>('coffee_shop');
   const categories = mockStore.getCategories();
-  const { wallet } = mockStore.getWallet();
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-forest-900 text-kraft-50 pt-16 pb-24 px-4 sm:px-6 lg:px-8 shadow-2xl border-b border-forest-700">

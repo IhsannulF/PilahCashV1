@@ -1,18 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Navbar } from '@/components/shared/navbar';
-import { mockStore, INITIAL_PROFILES } from '@/lib/store/mock-store';
-import { UserRole, Profile } from '@/types/database.types';
+import { INITIAL_PROFILES } from '@/lib/store/mock-store';
+import { Profile } from '@/types/database.types';
 import { Truck, CheckCircle2, Phone, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AdminMitraPage() {
-  const [role, setRole] = useState<UserRole>('admin');
   const [partners, setPartners] = useState<Profile[]>(
-    INITIAL_PROFILES.filter((p) => p.role === 'pengepul')
+    INITIAL_PROFILES.filter((p) => p.id === 'pg-demo')
   );
-  const { wallet } = mockStore.getWallet();
 
   const handleToggleStatus = (id: string, name: string) => {
     toast.success(`Status mitra pengepul ${name} berhasil di-update (Aktif)!`);
@@ -20,16 +17,15 @@ export default function AdminMitraPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         <div>
           <h1 className="text-2xl font-display font-extrabold text-forest-900 flex items-center gap-2">
             <Truck className="w-6 h-6 text-forest-900" />
-            Kelola Mitra Pengepul Daur Ulang (Admin)
+            Mitra Pengepul & Daur Ulang Rekanan (Admin)
           </h1>
           <p className="text-xs text-gray-600 font-sans mt-1">
-            Verifikasi, approve, dan pantau performa jaringan pengepul mitra PilahCash
+            Kelola dan pantau jaringan pengepul & pabrik daur ulang mitra tempat PilahCash mendaur ulang sampah kemasan
           </p>
         </div>
 

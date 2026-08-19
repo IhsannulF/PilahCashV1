@@ -53,7 +53,7 @@ export function TransactionTicketCard({
 
           <div className="flex items-center gap-2 text-xs font-semibold text-ink-muted pt-1">
             <Calendar className="w-3.5 h-3.5 text-forest-900 shrink-0" />
-            <span>
+            <span suppressHydrationWarning>
               {new Date(tx.created_at).toLocaleDateString('id-ID', {
                 day: 'numeric',
                 month: 'short',

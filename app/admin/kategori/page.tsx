@@ -1,22 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { Navbar } from '@/components/shared/navbar';
 import { mockStore } from '@/lib/store/mock-store';
-import { UserRole, WasteCategory } from '@/types/database.types';
+import { WasteCategory } from '@/types/database.types';
 import { formatRupiah } from '@/lib/utils/pricing';
 import { Leaf, Plus, Edit2, Check, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AdminKategoriPage() {
-  const [role, setRole] = useState<UserRole>('admin');
   const [categories, setCategories] = useState<WasteCategory[]>(mockStore.getCategories());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editPrice, setEditPrice] = useState<number>(0);
 
   const [newName, setNewName] = useState('');
   const [newPrice, setNewPrice] = useState<number>(3000);
-  const { wallet } = mockStore.getWallet();
 
   const handleStartEdit = (cat: WasteCategory) => {
     setEditingId(cat.id);
@@ -46,7 +43,6 @@ export default function AdminKategoriPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-kraft-50 text-ink-900">
-      <Navbar currentRole={role} onRoleChange={setRole} balance={wallet.balance} />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         <div>
@@ -76,7 +72,7 @@ export default function AdminKategoriPage() {
                     <span className="font-display font-bold text-sm text-forest-900 block">
                       {cat.name}
                     </span>
-                    <span className="text-xs text-gray-500 font-sans">
+                    <span className="text-xs text-gray-500 font-sans" suppressHydrationWarning>
                       Terakhir di-update: {new Date(cat.updated_at).toLocaleDateString('id-ID')}
                     </span>
                   </div>
